@@ -35,6 +35,9 @@ function App() {
       if (localStorage.getItem('history')) {
         let history = JSON.parse(localStorage.getItem('history'));
         history = [question, ...history];
+        history = history.map((item) =>
+          item.charAt(0).toUpperCase() + item.slice(1).trim())
+        history = [...new Set(history)];
         localStorage.setItem('history', JSON.stringify(history));
         setRecentHistory(history);
       } else {
@@ -66,8 +69,6 @@ function App() {
       // console.log(dataString);
 
       if (dataString) {
-        // setResult(data.candidates[0].content.parts[0].text);
-        // setResult(dataString);
         setResult([...result, { type: 'q', text: question ? question : selectedHistory }, { type: 'a', text: dataString }]);
         setQuestion("");
 
@@ -98,7 +99,7 @@ function App() {
           <option value="dark">Dark</option>
           <option value="light">Light</option>
         </select>
-        <RecentSearch recentHistory={recentHistory} setRecentHistory={setRecentHistory} setSelectedHistory={setSelectedHistory} darkMode={darkMode} />
+        <RecentSearch recentHistory={recentHistory} setRecentHistory={setRecentHistory} setSelectedHistory={setSelectedHistory} darkMode={darkMode} setResult={setResult} />
         <div className='col-span-4 p-10'>
           <h1 className='text-4xl bg-clip-text text-transparent bg-gradient-to-r from-pink-600 to-violet-600'>
             Hello User, Ask me Anything.
