@@ -3,6 +3,7 @@ import React from 'react'
 const RecentSearch = ({ recentHistory, setRecentHistory, setSelectedHistory, darkMode, setResult }) => {
 
     const clearHistory = () => {
+        console.log(recentHistory.length);
         localStorage.clear();
         setRecentHistory([]);
         setResult([]);
@@ -17,6 +18,7 @@ const RecentSearch = ({ recentHistory, setRecentHistory, setSelectedHistory, dar
         });
         setRecentHistory(history);
         localStorage.setItem('history', JSON.stringify(history));
+        if (history.length == 0) setResult([]);
     }
 
     return (
@@ -35,7 +37,7 @@ const RecentSearch = ({ recentHistory, setRecentHistory, setSelectedHistory, dar
             <ul className='text-left overflow-auto text-sm mt-2'>
                 {
                     recentHistory && recentHistory.map((item, index) => (
-                        <div className='flex justify-between pr-3 py-1'>
+                        <div key={index} className='flex justify-between pr-3 py-1'>
                             <li key={index} onClick={() => setSelectedHistory(item)} className='w-full p-1 pl-5 px-5 truncate dark:text-zinc-400 text-zinc-700 cursor-pointer dark:hover:bg-zinc-700 dark:hover:text-zinc-200 hover:bg-red-200 hover:text-zinc-800'>{item}</li>
                             <button onClick={() => clearSelectedHistory(item)} className='cursor-pointer dark:hover:bg-zinc-900 hover:bg-red-600'>
                                 {
