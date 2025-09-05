@@ -19,7 +19,7 @@ const Answers = ({ ans, totalResult, index, type }) => {
     const rendered = {
         code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || '');
-            return !inline && Math ? (
+            return !inline && match ? (
                 <SyntaxHighlighter
                     {...props}
                     children={String(children).replace(/\n$/, '')}
